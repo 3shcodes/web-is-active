@@ -3,12 +3,11 @@ package models
 import (
 	sql "database/sql"
 	"fmt"
-	"time"
 )
 
 type User struct {
-	UserId   int    `json:"user_id"`
-	UserName string `json:"user_name"`
+	UserId   int    `json:"userId"`
+	UserName string `json:"userName"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Image    string `json:"image"`
@@ -36,11 +35,12 @@ func UserScan(row *sql.Rows) User {
 }
 
 type Site struct {
-	SiteId   int       `json:"siteId"`
-	SiteName string    `json:"siteName"`
-	Url      string    `json:"url"`
-	LastStat bool      `json:"lastStat"`
-	LastTime time.Time `json:"lastChAt"`
+	SiteId   int    `json:"siteId"`
+	SiteName string `json:"siteName"`
+	Url      string `json:"url"`
+	LastStat int    `json:"lastStat"`
+	LastTime string `json:"lastTime"`
+	Issue    string `json:"issue"`
 }
 
 func SiteScan(row *sql.Rows) Site {
@@ -52,6 +52,7 @@ func SiteScan(row *sql.Rows) Site {
 		&foundSite.Url,
 		&foundSite.LastStat,
 		&foundSite.LastTime,
+		&foundSite.Issue,
 	); err != nil {
 		panic(err)
 	}

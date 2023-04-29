@@ -23,25 +23,59 @@ func DbHere(conf string) *MySql {
 	}
 }
 
-// c
+// create
 func (inst *MySql) InsertUser(newUser models.User) error {
 
 	qstring := `INSERT INTO users ( userName, email, password, image, token, refToken) VALUES (?,?,?,?,?,?);`
 	insTool, err := inst.Db.Prepare(qstring)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	defer insTool.Close()
 
 	if _, err = insTool.Exec(newUser.UserName, newUser.Email, newUser.Password, newUser.Image, newUser.Token, newUser.RefToken); err != nil {
-		panic(err)
+		return err
 	}
 
 	return nil
 }
 
-// r
+func (inst *MySql) InsertSite(newSite models.Site) error {
+
+	qstring := `INSERT INTO sites ( siteName, url, lastStat, lastTime, issue ) VALUES (?,?,?,?,?);`
+	insTool, err := inst.Db.Prepare(qstring)
+	if err != nil {
+		return err
+	}
+
+	defer insTool.Close()
+
+	if _, err = insTool.Exec(newSite.SiteName, newSite.Url, newSite.LastStat, newSite.LastTime, newSite.Issue); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (inst *MySql) InsertUserSite(newRel models.UserSite) error {
+
+	qstring := `INSERT INTO userSite ( userName, siteName, isFav ) VALUES (?,?,?);`
+	insTool, err := inst.Db.Prepare(qstring)
+	if err != nil {
+		return err
+	}
+
+	defer insTool.Close()
+
+	if _, err = insTool.Exec(newRel.UserName, newRel.SiteName, 0); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// read
 func (inst *MySql) GetUsers(inc string, exc string) ([]models.User, error) {
 
 	var resUsers []models.User
@@ -56,7 +90,7 @@ func (inst *MySql) GetUsers(inc string, exc string) ([]models.User, error) {
 
 	rows, err := inst.Db.Query(qstring)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	for rows.Next() {
@@ -66,7 +100,55 @@ func (inst *MySql) GetUsers(inc string, exc string) ([]models.User, error) {
 	return resUsers, nil
 }
 
-// u
+func (inst *MySql) GetSites(inc string, exc string) ([]models.Site, error) {
+
+	var resSites []models.Site
+	qstring := "SELECT * FROM sites;"
+
+	if inc != "" {
+		qstring = `SELECT * FROM site WHERE siteName LIKE "` + inc + `"`
+	}
+	if exc != "" {
+		qstring = `SELECT siteId,sites.siteName,url,lastStat,lastTime,issue FROM sites LEFT JOIN userSite on sites.siteName=userSite.siteName WHERE userSite.userName="` + exc + `"`
+	}
+
+	rows, err := inst.Db.Query(qstring)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		resSites = append(resSites, models.SiteScan(rows))
+	}
+
+	return resSites, nil
+}
+
+func (inst *MySql) GetUserSites(inc string, exc string) ([]models.UserSite, error) {
+
+	var resRels []models.UserSite
+	qstring := "SELECT * FROM userSite;"
+
+	if inc != "" {
+		qstring = `SELECT * FROM userSite WHERE siteName LIKE "` + inc + `"`
+	}
+	if exc != "" {
+		qstring = `SELECT * FROM userSite WHERE userName="` + exc + `"`
+	}
+
+	rows, err := inst.Db.Query(qstring)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		resRels = append(resRels, models.UserSiteScan(rows))
+	}
+
+	return resRels, nil
+}
+
+// update
 func (inst *MySql) UpdateUser(updUser models.User) error {
 
 	users, err := inst.GetUsers("", updUser.UserName)
@@ -93,7 +175,7 @@ func (inst *MySql) UpdateUser(updUser models.User) error {
 	return nil
 }
 
-// d
+// delete
 func (inst *MySql) RemoveUser(userName string) error {
 
 	users, err := inst.GetUsers("", userName)

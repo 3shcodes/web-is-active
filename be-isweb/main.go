@@ -24,8 +24,11 @@ func init() {
 	godotenv.Load()
 	config := os.Getenv("MYSQL")
 	IsWebDB = database.DbHere(config)
+
 	AuthServices := services.AuthToolsCons(IsWebDB)
 	AuthControllers = *controllers.GetAuthController(AuthServices)
+	UserServices := services.UserToolConstruct(IsWebDB)
+	UserControllers = *controllers.GetUserController(UserServices)
 
 	app = gin.Default()
 	port = os.Getenv("PORT")
@@ -38,7 +41,8 @@ func main() {
 	defer IsWebDB.Db.Close()
 	basePath := app.Group("/apis")
 	AuthControllers.AuthRoutes(basePath)
+	UserControllers.UserRoutes(basePath)
+
 	app.Run(":" + port)
 	fmt.Println("Aramichachu")
-
 }

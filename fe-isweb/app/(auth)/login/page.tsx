@@ -1,12 +1,39 @@
 "use client"
+import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import userSlice from "@/redux/slices/userSlice";
+import { authUtils } from "@/utils/authUtils";
 
 function LoginPage() {
+
+    const router = useRouter();
+    let user: User | null = useAppSelector(state => state.user);
+    user = ( user === null ? authUtils.checkUserExists() : user );
+     
+    if ( user!==null ){
+        router.push("/dashboard");
+    }
+
+    const dispatch = useAppDispatch();
     
     const [userName,setUserName] = useState<string>("");
     const [pass,setPass] = useState<string>("");
-    function handleLogin(){
-        
+
+    async function handleLogin(){
+        try {
+            const resp = await axios.post("http://localhost:1234/apis/auth/login", { "user_name" : userName, "password" : pass });
+            console.log(resp);
+            if ( resp.data.ok ) {
+                localStorage.setItem("user",JSON.stringify(resp.data.user));
+                dispatch(userSlice.actions.loggedIn(resp.data.user));
+                console.log("login successful");
+                router.push("/dashboard");
+            }
+        } catch (error) {
+            throw error;
+        }
     }
     return (
     <div className="loginPage min-h-screen mx-20">
