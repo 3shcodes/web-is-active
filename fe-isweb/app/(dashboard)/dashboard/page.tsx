@@ -1,36 +1,23 @@
-"use client"
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useRouter } from "next/navigation";
-import { authUtils } from "@/utils/authUtils";
-import userSlice from "@/redux/slices/userSlice";
+import LogoutButton from "@/components/logoutButt";
+
 
 
 interface DashBoardProps {}
 
-function DashBoardPage({}:DashBoardProps) {
-    const router = useRouter();
-    let user: User | null = useAppSelector(state => state.user);
-    const dispatch = useAppDispatch();
-
-    if (user === null) {
-        user = authUtils.checkUserExists();
-        if ( user === null ){
-            router.push("/login");
-        }
-    }
-
-    function handleLogout(){
-        dispatch(userSlice.actions.logout());
-        router.push("/");
-    }
+async function DashBoardPage({}:DashBoardProps) {
+    // prereqs
 
 
-    console.log("dashuser",user)
+    // globalstates
+
+    // functions
+
+
     return (
-        <>
-            {user?.userName}<br />
-            <button onClick={handleLogout}>Log Out</button>
-        </>
+        <div className="flex-1">
+            Dashboard page
+            <LogoutButton />
+        </div>
     );
 }
 

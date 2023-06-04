@@ -15,6 +15,15 @@ type User struct {
 	RefToken string `json:"refToken"`
 }
 
+func (u *User) Validate() bool {
+    if (  u.UserName=="" || u.Email=="" ||   u.Token=="" || u.RefToken=="" ) {
+        return false;
+    }
+    return true;
+}
+
+
+
 func UserScan(row *sql.Rows) User {
 	var foundUser User
 
@@ -41,6 +50,14 @@ type Site struct {
 	LastStat int    `json:"lastStat"`
 	LastTime string `json:"lastTime"`
 	Issue    string `json:"issue"`
+}
+
+func (s *Site) Validate() bool {
+    if (  s.SiteName=="" || s.Url=="" ) {
+        return false;
+    }
+    return true;
+    
 }
 
 func SiteScan(row *sql.Rows) Site {
@@ -93,4 +110,8 @@ func GetUserSites(rows *sql.Rows, inc string, exc string) []UserSite {
 	}
 
 	return resArr
+}
+
+type SitesArr struct {
+    ThatArr []string `json:"thatArr"`
 }

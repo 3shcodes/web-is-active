@@ -1,13 +1,13 @@
-interface User {
+export interface User {
     userId: string,
     userName: string,
     email: string,
     image: string,
     token: string,
     refToken: string,
-}
+} 
 
-interface Site {
+export interface Site {
     siteId: string,
     siteName: string,
     isFav: boolean,

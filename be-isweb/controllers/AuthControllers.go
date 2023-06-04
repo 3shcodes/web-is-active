@@ -3,7 +3,6 @@ package controllers
 import (
 	"be-isweb/models"
 	"be-isweb/services"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -53,7 +52,6 @@ func (app *AuthController) Login(c *gin.Context) {
 		c.JSON(403, gin.H{"msg": "Parsing Error", "err": err, "ok": false})
 		return
 	}
-	fmt.Println(loginReq)
 
 	resp := app.Funcs.Login(loginReq.UserName, loginReq.Password)
 	if resp.Msg == "Wrong Password" {

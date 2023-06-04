@@ -32,7 +32,12 @@ func init() {
 
 	app = gin.Default()
 	port = os.Getenv("PORT")
-	app.Use(cors.Default())
+
+	corsConf := cors.DefaultConfig()
+	corsConf.AllowAllOrigins = true
+    corsConf.AddAllowHeaders("token");
+	app.Use(cors.New(corsConf))
+	//app.Use(cors.Default())
 }
 
 func main() {
