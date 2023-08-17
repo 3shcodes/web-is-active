@@ -3,6 +3,7 @@ package controllers
 import (
 	"be-isweb/models"
 	"be-isweb/services"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,10 +34,12 @@ func (app *AuthController) SignUp(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(signupReq)
+
 	resp := app.Funcs.SignUp(signupReq)
 	if resp.Err != nil {
-		c.JSON(500, gin.H{"msg": "Intrernal Server Error", "ok": false, "err": resp.Err})
-		panic(resp.Err)
+		c.JSON(500, gin.H{"msg": resp.Msg, "ok": false, "err": resp.Err})
+		return
 	}
 
 	c.JSON(200, gin.H{"msg": "Signed Up Successfully", "ok": true})
@@ -53,13 +56,14 @@ func (app *AuthController) Login(c *gin.Context) {
 		return
 	}
 
+    fmt.Println(loginReq)
 	resp := app.Funcs.Login(loginReq.UserName, loginReq.Password)
 	if resp.Msg == "Wrong Password" {
 		c.JSON(403, gin.H{"msg": "Wrong Password", "ok": false})
 		return
 	}
 	if resp.Err != nil {
-		c.JSON(500, gin.H{"msg": "Intrernal Server Error", "ok": false, "err": resp.Err})
+		c.JSON(500, gin.H{"msg": resp.Msg, "ok": false, "err": resp.Err})
 		panic(resp.Err)
 	}
 

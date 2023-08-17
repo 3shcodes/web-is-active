@@ -14,7 +14,7 @@ function ThemeSwitch() {
 
     return (
         <>
-            <select value={theme} onChange={changeTheme} className="p-2 rounded ">
+            <select value={theme} onChange={changeTheme} className="p-2 rounded dark:bg-slate-700">
                 <option value="light" >Light</option>
                 <option value="dark" >Dark</option>
                 <option value="system" >System</option>

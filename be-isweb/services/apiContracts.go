@@ -14,7 +14,11 @@ type UserServices interface {
 
 	// sites
 	GetSites(userName string) *models.Resp
-	AddSite(userName string,  siteModel models.Site) *models.Resp
+	QuerySites(siteQuery string) *models.Resp
+	CheckSName(siteName string) *models.Resp
+    CheckSUrl(siteUrl string ) *models.Resp
+	AddNewSite(userName string, siteModel models.Site) *models.Resp
+	AddOldSite(userName string, siteName string) *models.Resp
 	ToggleFav(userName, siteName string) *models.Resp
 	UpdateSite(siteName string) *models.Resp
 	UpdateSome(newSitesArr []string) *models.Resp

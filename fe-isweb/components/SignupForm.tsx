@@ -1,7 +1,7 @@
 "use client"
-import {signIn} from 'next-auth/react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import Link from 'next/link';
 
 function SignupForm() {
     const [userName,setUserName] = useState<string>("");
@@ -9,8 +9,33 @@ function SignupForm() {
     const [pass,setPass] = useState<string>("");
     const [rePass,setRePass] = useState<string>("");
 
+    const router = useRouter();
 
-    function handleSignup(){
+    async function handleSignup(){
+        if ( pass !== rePass || pass.length<9 ) {
+            alert("pass dont match or way less chars");
+            return;
+        }
+        const cont = {
+            "userName" : userName,
+            "email" : email,
+            "password" : pass,
+            "image" : ""
+        }
+        try {
+            const resp = await axios.post("http://localhost:1234/apis/auth/signup", cont );
+            console.log(resp)
+            if ( resp.data.ok ) {
+                router.push("/login")
+            } else {
+                alert("signup unsuccessful");
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+
 
     }
 

@@ -5,6 +5,7 @@ import (
 	"be-isweb/models"
 	"be-isweb/utils"
 	"errors"
+	"fmt"
 )
 
 type AuthTools struct {
@@ -19,12 +20,14 @@ func AuthToolsCons(db *database.MySql) *AuthTools {
 
 func (inst *AuthTools) Login(userName, password string) *models.Resp {
 
+    fmt.Println(userName)
 	users, err := inst.IsWebDB.GetUsers("", userName)
 	if err != nil {
 		return models.PResMaker("Internal Server Error", nil, 500, err)
 	}
 
 	if len(users) != 1 {
+        fmt.Println(users)
 		return models.PResMaker("No User Found", nil, 403, errors.New("Status Bad Request"))
 	}
 
@@ -56,7 +59,7 @@ func (inst *AuthTools) SignUp(newUser models.User) *models.Resp {
 	}
 
 	if len(users) != 0 {
-		return models.PResMaker("No User Found", nil, 403, errors.New("Status Bad Request"))
+		return models.PResMaker(" User already exists ", nil, 403, errors.New("Status Bad Request"))
 	}
 
 	token, refToken, err := utils.TokenGenerator(newUser.UserName, newUser.Email)
