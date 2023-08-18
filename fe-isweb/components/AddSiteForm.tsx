@@ -30,7 +30,7 @@ function AddSiteForm( {user} : AuthProps ) {
             return;
         }
         const axiosConf = {
-            url : "http://localhost:1234/apis/user/checksn?siteName=" + e.target.value,
+            url : process.env.BE_URL+"/apis/user/checksn?siteName=" + e.target.value,
             headers : { "token" : user.token },
         }
 
@@ -55,7 +55,7 @@ function AddSiteForm( {user} : AuthProps ) {
             return;
         }
         const axiosConf = {
-            url : "http://localhost:1234/apis/user/checksu?siteUrl=" + e.target.value,
+            url : process.env.BE_URL+"/apis/user/checksu?siteUrl=" + e.target.value,
             headers : { "token" : user.token },
         }
 
@@ -71,7 +71,7 @@ function AddSiteForm( {user} : AuthProps ) {
     async function addSiteButt () {
         if ( siteUAvail==="Available" &&  siteNAvail==="Available") {
             const axiosConf = {
-                url : `http://localhost:1234/apis/user/addnsite?userName=${user.userName}`,
+                url : `${process.env.BE_URL}/apis/user/addnsite?userName=${user.userName}`,
                 headers: {
                     'token' : user.token,
                 }

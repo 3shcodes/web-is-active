@@ -19,7 +19,7 @@ export const authOptions:AuthOptions = {
 
             async authorize(credentials , _ ) {
                 try {
-                    const resp = await axios.post("http://localhost:1234/apis/auth/login", { "userName": credentials!.username, "password": credentials!.password });
+                    const resp = await axios.post(process.env.BE_URL+"/apis/auth/login", { "userName": credentials!.username, "password": credentials!.password });
                     if ( resp.data.ok ) {
                         return resp.data.user;
                     }

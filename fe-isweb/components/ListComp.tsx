@@ -16,7 +16,7 @@ function ListComp( {site, user}:{site:Site , user:User} ){
 
     async function addExistingSite() {
         const reqConf = {
-            url : "http://localhost:1234/apis/user/addosite?userName=" + user.userName + "&siteName=" + site.siteName,
+            url : process.env.BE_URL+"/apis/user/addosite?userName=" + user.userName + "&siteName=" + site.siteName,
             headers : { "token" : user.token }
         }
 

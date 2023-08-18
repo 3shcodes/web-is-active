@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 
 function RenderSites( props: {user:User}){
     const user = props.user;
+    console.log(process.env.BE_URL)
     const sitesReqConf = {
-        url : "http://localhost:1234/apis/user/getsites?userName="+user.userName,
+        url : process.env.BE_URL+"/apis/user/getsites?userName="+user.userName,
         headers : { 'token' : user.token }
     }
     const [sites, setSites] = useState<Site[]>([]);
@@ -45,7 +46,7 @@ function RenderSites( props: {user:User}){
         
         
         getSites();
-    },[])
+    },[ sitesReqConf ])
 
 
     return (

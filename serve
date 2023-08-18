@@ -1,0 +1,16 @@
+#!/bin/bash
+tmux new -s isweb -d &&
+
+tmux new-window -n beServe &&
+tmux select-window -t beServe &&
+tmux send-keys 'cd ./be-isweb/ && go run main.go' C-m &&
+tmux new-window -n bePub &&
+tmux select-window -t bePub &&
+tmux send-keys 'ssh -R iswebbe:80:localhost:2002 serveo.net' C-m &&
+
+tmux new-window -n feServe &&
+tmux select-window -t feServe &&
+tmux send-keys 'cd ./fe-isweb/ && yarn dev' C-m &&
+tmux new-window -n fePub &&
+tmux select-window -t fePub &&
+tmux send-keys 'ssh -R iswebby3sh:80:localhost:3002 serveo.net' C-m
