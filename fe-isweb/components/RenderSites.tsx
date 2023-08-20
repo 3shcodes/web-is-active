@@ -8,10 +8,6 @@ import { useEffect, useState } from "react";
 function RenderSites( props: {user:User}){
     const user = props.user;
     console.log(process.env.BE_URL)
-    const sitesReqConf = {
-        url : process.env.BE_URL+"/apis/user/getsites?userName="+user.userName,
-        headers : { 'token' : user.token }
-    }
     const [sites, setSites] = useState<Site[]>([]);
     
     function remFromArr(deletedSiteId:string){
@@ -24,6 +20,10 @@ function RenderSites( props: {user:User}){
 
     useEffect(()=>{
 
+        const sitesReqConf = {
+            url : process.env.BE_URL+"/apis/user/getsites?userName="+user.userName,
+            headers : { 'token' : user.token }
+        }
         async function getSites(){
 
             try {
@@ -46,7 +46,7 @@ function RenderSites( props: {user:User}){
         
         
         getSites();
-    },[ sitesReqConf ])
+    },[ ])
 
 
     return (
