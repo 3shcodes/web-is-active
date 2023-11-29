@@ -1,0 +1,4 @@
+FE_PORT=3002
+BE_URL=https://iswebbe.serveo.net
+NEXTAUTH_URL=https://iswebby3sh.serveo.net
+

@@ -1,10 +1,9 @@
 import { getCurrentUser } from "@/lib/session";
 import Link from "next/link";
-import axios from "axios";
 import { redirect } from "next/navigation";
-import SiteComp from "@/components/SiteComp";
 import { Icons } from "@/components/Icons";
 import RenderSites from "@/components/RenderSites";
+
 
 
 interface DashBoardProps {}
@@ -16,7 +15,7 @@ async function DashBoardPage({}:DashBoardProps) {
         redirect("/login");
     }
     const AddIcon = Icons["add"];
-    
+
 
     return (
         <main className="flex flex-1 flex-col h-min">

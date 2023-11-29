@@ -1,0 +1,9 @@
+GIMP Palette
+Name: colorScheme.gpl
+Columns: 1
+#
+51	65	85	primary
+100	116	139	secondary
+31	41	55	accent
+28	27	34	Black
+18	18	18	Black
