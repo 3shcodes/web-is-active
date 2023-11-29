@@ -50,7 +50,7 @@ function UserDetailsComp( props: {user:User}){
             return;
         }
         const axiosConf = {
-            url : "http://localhost:1234/apis/user/upduser",
+            url : process.env.BE_URL+"/apis/user/upduser",
             headers: {
                 "token" : user.token
             }

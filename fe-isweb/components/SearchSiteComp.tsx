@@ -14,7 +14,7 @@ function SearchOldSite( props : CompProps ) {
     
     useEffect(()=>{
         const axiosConf = {
-                url: "http://localhost:1234/apis/user/quesites?find=",
+                url: process.env.BE_URL+"/apis/user/quesites?find=",
                 headers: { "token" : props.user.token}
         }
 
@@ -30,11 +30,11 @@ function SearchOldSite( props : CompProps ) {
 
         fetchSites();
 
-    }, [])
+    }, [props])
     
     async function searchSites (e:ChangeEvent<HTMLInputElement>) {
         const axiosConf = {
-                url: "http://localhost:1234/apis/user/quesites?find=" + e.target.value,
+                url: process.env.BE_URL+"/apis/user/quesites?find=" + e.target.value,
                 headers: { "token" : props.user.token}
         }
         const resp = await axios.get(axiosConf.url, axiosConf);
@@ -54,7 +54,7 @@ function SearchOldSite( props : CompProps ) {
             <div>
                 {
                     sitesList.map(( site:Site ) => {
-                        return <ListComp site={site} user={props.user} />
+                        return <ListComp key={site.siteId} site={site} user={props.user} />
                     })
                 }
                 {

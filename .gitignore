@@ -1,4 +1,6 @@
-/frontend/node_modules
 .env
-.env.local
 .gitignore
+serve
+./fe-isweb/node_modules/
+./be-isweb/deployBe
+./fe-isweb/deployFe

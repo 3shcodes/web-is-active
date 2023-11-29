@@ -16,7 +16,7 @@ function LoginPage(){
             <div className=' flex flex-col max-w-xl'>
                 <LoginForm /> 
                 <span className='w-xl border-t border-gray-700 my-4' />
-                <div className='flex justify-center'><Link href="/signup" className='text-neutral-500 underline'>Create an account if you don't have one</Link></div>
+                <div className='flex justify-center'><Link href="/signup" className='text-neutral-500 underline'>{"Create an account if you don't have one"}</Link></div>
             </div>
         </div>
     </main>

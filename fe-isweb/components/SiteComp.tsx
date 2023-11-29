@@ -6,7 +6,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-function SiteComp( {site, user, remFromArr}:{site:Site , user:User, remFromArr:Function} ){
+function SiteComp( props:{site:Site , user:User, remFromArr:Function} ){
+    //site user remFromArr
+    const user = props.user;
+    const remFromArr = props.remFromArr;
+    const [site, setSite] = useState(props.site);
+
     const absUrl = "http://"+site.url;
     const RefreshIcon = Icons["refresh"];
     const DelIcon = Icons["delete"];
@@ -22,14 +27,16 @@ function SiteComp( {site, user, remFromArr}:{site:Site , user:User, remFromArr:F
         console.log("ss")
         const reqConf = {
             method : "PUT",
-            url : "http://localhost:1234/apis/user/updsite?siteName=" + site.siteName,
+            url : process.env.BE_URL+"/apis/user/updsite?siteName=" + site.siteName,
             headers : { 'token' : user.token }
         }
 
         const resp = await fetch( reqConf.url, reqConf);
-        console.log(resp);
+        // console.log(resp);
         setIsLoading(false);
         if ( resp.ok ) {
+            const data = await resp.json();
+            setSite(data.data);
             router.push("/dashboard");
         } else {
             console.log(resp)
@@ -40,7 +47,7 @@ function SiteComp( {site, user, remFromArr}:{site:Site , user:User, remFromArr:F
         const reqConf = {
             method : "PUT",
             // url : "http://localhost:1234/apis/user/updsite?siteName=" + site.siteName ,
-            url : `http://localhost:1234/apis/user/delsite?siteName=${ site.siteName }&userName=${user.userName} `,
+            url : `${process.env.BE_URL}/apis/user/delsite?siteName=${ site.siteName }&userName=${user.userName} `,
             headers : { 'token' : user.token }
         }
 

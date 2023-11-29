@@ -23,7 +23,7 @@ function SignupForm() {
             "image" : ""
         }
         try {
-            const resp = await axios.post("http://localhost:1234/apis/auth/signup", cont );
+            const resp = await axios.post(`${process.env.BE_URL}/apis/auth/signup`, cont );
             console.log(resp)
             if ( resp.data.ok ) {
                 router.push("/login")

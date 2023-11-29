@@ -20,11 +20,11 @@ export default function Home() {
             Tired of checking all your favorite sites before you download pirated movies?
           </p>
           <p className='text-xl flex text-center max-w-xl text-neutral-800 dark:text-neutral-300 mb-4'>
-            I mean I don't encourage nobody to use pirated content. But yeah for this and some more use cases like pentesting, you can use this site.
+            {"I mean I don't encourage nobody to use pirated content. But yeah for this and some more use cases like pentesting, you can use this site."}
             {/* If there are more features that can be added, I will add in future and you can recommend some too. */}
           </p>
           <div className='flex justify-between min-w-[180px]'>
-            <Link href="/login" className='bg-black text-white dark:bg-white dark:text-[#1c1b22] px-4 py-2 rounded-md'>Let's go</Link>
+            <Link href="/login" className='bg-black text-white dark:bg-white dark:text-[#1c1b22] px-4 py-2 rounded-md'>{"Let's go"}</Link>
             <Link href="http://github.com/3shcodes/web-is-active" target='_blank' className='bg-transparent px-4 py-2 rounded-md border border-gray-700'>Github</Link>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function Home() {
         <div className='flex flex-col items-center'>
           <p className='text-6xl font-black mb-4 text-center max-w-5xl'> Open Source ftw!</p>
           <p className='text-xl text-center max-w-xl text-neutral-800 dark:text-neutral-300'>
-            I acknowledge that nobody cares but still 'IsWeb?' is open-source and powered by open-source software only (I'm broke af).<br />
+            {"I acknowledge that nobody cares but still 'IsWeb?' is open-source and powered by open-source software only (I'm broke af)."}<br />
             The code is available on {" "}<Link href="http://github.com/3shcodes/web-is-active" className='underline underline-offset-4'>Github</Link> {" "}
           </p>
         </div>
